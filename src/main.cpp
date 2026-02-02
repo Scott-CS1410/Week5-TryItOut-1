@@ -40,34 +40,21 @@ using namespace std;
 // =====================
 // Enum for flight status
 // =====================
-enum FlightStatus {
-    ON_TIME,
-    DELAYED,
-    BOARDING,
-    DEPARTED,
-    CANCELLED
-};
+
 
 // =====================
 // Struct for flight data
 // =====================
-struct Flight {
-    string flightNumber;
-    string destination;
-    int scheduledDeparture; // minutes since midnight
-    int currentTime;        // minutes since midnight
-    int delayMinutes;
-    bool isCancelled;
-    FlightStatus status;
-};
+
 
 // =====================
 // Function prototypes
 // =====================
-int militaryToMinutes(int militaryTime);
-void updateFlightStatus(Flight& flight);
-string statusToString(FlightStatus status);
-void displayFlight(const Flight& flight);
+// ** Please add the proper parameters **
+int militaryToMinutes();
+void updateFlightStatus();
+string statusToString();
+void displayFlight();
 
 // =====================
 // Main
@@ -139,56 +126,4 @@ int main() {
     displayFlight(flight5);
 
     return 0;
-}
-
-// =====================
-// Function definitions
-// =====================
-
-// Converts military time (HHMM) to minutes since midnight
-int militaryToMinutes(int militaryTime) {
-    int hours = militaryTime / 100;
-    int minutes = militaryTime % 100;
-    return hours * 60 + minutes;
-}
-
-// Determines correct flight status
-void updateFlightStatus(Flight& flight) {
-
-    if (flight.isCancelled) {
-        flight.status = CANCELLED;
-    }
-    else if (flight.currentTime >= flight.scheduledDeparture) {
-        flight.status = DEPARTED;
-    }
-    else if (flight.delayMinutes > 0 &&
-        flight.currentTime < flight.scheduledDeparture) {
-        flight.status = DELAYED;
-    }
-    else if (flight.currentTime >= flight.scheduledDeparture - 30 &&
-        flight.currentTime < flight.scheduledDeparture) {
-        flight.status = BOARDING;
-    }
-    else {
-        flight.status = ON_TIME;
-    }
-}
-
-// Converts enum to readable text
-string statusToString(FlightStatus status) {
-    switch (status) {
-    case ON_TIME: return "On Time";
-    case DELAYED: return "Delayed";
-    case BOARDING: return "Boarding";
-    case DEPARTED: return "Departed";
-    case CANCELLED: return "Cancelled";
-    default: return "Unknown";
-    }
-}
-
-// Displays flight info
-void displayFlight(const Flight& flight) {
-    cout << "Flight " << flight.flightNumber
-        << " to " << flight.destination << endl;
-    cout << "Status: " << statusToString(flight.status) << endl;
 }
